@@ -47,11 +47,17 @@ TEST(ListQueueTest, ReadMoreThanWrite)
         Data++;
     }
     
+    TEST_ASSERT_EQUAL_UINT8(Queue_Is_Full(pQueue), SUCCESS);
+    
     for(i = 0; i < 5; i++)
     {
         TEST_ASSERT_EQUAL_UINT8(Queue_Read(&Data, pQueue), SUCCESS);
         TEST_ASSERT_EQUAL_UINT16(Data, i);
     }
+    
+    TEST_ASSERT_EQUAL_UINT8(Queue_Read(&Data, pQueue), ERROR);
+    
+    TEST_ASSERT_EQUAL_UINT8(Queue_Is_Empty(pQueue), SUCCESS);
     
     TEST_ASSERT_EQUAL_UINT8(Queue_Read(&Data, pQueue), ERROR);
 }
